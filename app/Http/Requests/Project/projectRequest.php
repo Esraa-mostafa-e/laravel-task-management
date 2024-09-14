@@ -18,8 +18,10 @@ class projectRequest extends FormRequest
             'name'       => ['required'],
             'department' => ['required'],
             'start_date' =>['required','date'],
-            'end_date'   =>['required','date'],
-            'status'     =>['required']
+            'end_date'   =>['required','date','after:start_date'],
+            'status'     =>['required'],
+            'users'      =>['nullable','array'],
+            'users.*'    => ['exists:users,id']
 
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\QueryBuilders\BaseQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 abstract class BaseService
 {
@@ -14,10 +15,14 @@ abstract class BaseService
      */
     abstract public function model(): string;
 
-    public function all(
-
-    ) {
-        return $this->model()::all();
+    public function all(Request $request)
+     {
+        $query = $this->model()::query();
+        $filters = $request->all();
+        foreach ($filters as $key => $value) {
+            $query->where($key, $value);
+         }
+        return $query->get();
     }
 
     public function create(array $data)

@@ -7,7 +7,7 @@ use App\Services\UserService;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\User\UserRequest;
 use App\Http\Controllers\API\BaseController;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends BaseController
@@ -24,9 +24,9 @@ class UserController extends BaseController
     /**
      * Display a listing of the resource.
      */
-    public function index() :AnonymousResourceCollection
+    public function index(Request $request) :AnonymousResourceCollection
     {
-        return UserResource::collection($this->service->all());
+        return UserResource::collection($this->service->all($request));
     }
 
     /**
@@ -52,9 +52,9 @@ class UserController extends BaseController
      */
     public function update(UserRequest $request, User $user) :UserResource
     {
-        $data = $request->validated();
+         $data = $request->validated();
          $this->service->update($user,$data);
-        return new UserResource($user);
+         return new UserResource($user);
     }
 
     /**

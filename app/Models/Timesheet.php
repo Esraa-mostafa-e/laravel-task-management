@@ -12,6 +12,8 @@ class Timesheet extends Model
         'task_name',
         'date',
         'hours',
+        'user_id',
+        'project_id'
     ];
 
         public function user()

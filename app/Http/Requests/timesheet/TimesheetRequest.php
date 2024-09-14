@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\timesheet;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TimesheetRequest extends FormRequest
@@ -18,9 +17,9 @@ class TimesheetRequest extends FormRequest
         return [
             'task_name'    => ['required'],
             'date'         => ['required','date'],
-            'hours'        =>['required','time'],
-            'user_id'      =>['required',Rule::exists('users','id')],
-            'project_id'   => ['required',Rule::exists('projects','id')],
+            'hours'        =>['required','integer'],
+            'user_id'      =>['required','exists:projects,id'],
+            'project_id'   => ['required','exists:users,id'],
         ];
     }
 }
